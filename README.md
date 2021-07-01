@@ -1,6 +1,23 @@
 # FireNet-LightWeight-Network-for-Fire-Detection
+
+更新如下 2021/07/01：
+
+- 增加了单张图片推理测试；
+
+- 增加了 keras 转成 tflite 模型（非量化）
+
+- 增加了 keras 转成 tflite 模型（量化）
+  - 动态量化
+  - float16 量化
+  - int 量化
+
+---
+
+原 Readme.md ：
+
 > A Specialized Lightweight Fire & Smoke Detection Model for Real-Time IoT Applications
->>(Preprint of the research paper on this work is available at https://arxiv.org/abs/1905.11922v2. Please consider citing if you happen to use the codes or dataset.
+>
+> >(Preprint of the research paper on this work is available at https://arxiv.org/abs/1905.11922v2. Please consider citing if you happen to use the codes or dataset.
 
 ### Citation
 ```

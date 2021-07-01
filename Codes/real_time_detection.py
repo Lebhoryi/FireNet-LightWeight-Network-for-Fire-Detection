@@ -1,3 +1,5 @@
+import os
+os.environ["TF_CPP_LOG_LEVEL"] = "2"
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
@@ -6,9 +8,9 @@ import cv2
 import time
 
 # loading the stored model from file
-model=load_model(r'Fire-64x64-color-v7-soft.h5')
+model=load_model(r'../Trained_Model_FIreNet/Fire-64x64-color-v7-soft.h5')
 
-cap = cv2.VideoCapture(r'VIDEO_FILE_NAME')
+cap = cv2.VideoCapture(0)
 time.sleep(2)
 
 if cap.isOpened(): # try to get the first frame
@@ -41,11 +43,12 @@ while(1):
         tic = time.time()
         fire_prob = model.predict(image)[0][0] * 100
         toc = time.time()
-        print("Time taken = ", toc - tic)
-        print("FPS: ", 1 / np.float64(toc - tic))
-        print("Fire Probability: ", fire_prob)
-        print("Predictions: ", model.predict(image))
-        print(image.shape)
+        if fire_prob > 0.4:
+            print("Time taken = ", toc - tic)
+            print("FPS: ", 1 / np.float64(toc - tic))
+            print("Fire Probability: ", fire_prob)
+            print("Predictions: ", model.predict(image))
+            print(image.shape)
         
         label = "Fire Probability: " + str(fire_prob)
         cv2.putText(orig, label, (10, 25),  cv2.FONT_HERSHEY_SIMPLEX,0.7, (0, 255, 0), 2)
