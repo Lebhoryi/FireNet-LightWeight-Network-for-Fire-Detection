@@ -9,7 +9,7 @@ jobs:
         
     steps:
       - name: running linux
-        if: runner.os == 'Linux'
+        if: runner.os == "Linux"
         shell: bash
         run: |
           echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
