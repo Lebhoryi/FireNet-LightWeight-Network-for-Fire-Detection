@@ -29,6 +29,10 @@ jobs:
   test:
     needs: [Explore-GitHub-Actions]
     runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04,windows-2019,macos-10.15]
+        python: [3.6,3.7,3.8,3.9]
     steps:
       - uses: actions/checkout@v2
       - name: Lint with flake8
