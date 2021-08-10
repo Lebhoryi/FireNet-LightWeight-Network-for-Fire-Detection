@@ -28,7 +28,7 @@ jobs:
           
   test:
     needs: [Explore-GitHub-Actions]
-    runs-on: ${{matrix.os}}
+#     runs-on: ${{matrix.os}}
 #     strategy:
 #       matrix:
 #         os: [windows-2019, ubuntu-18.04]
