@@ -23,6 +23,7 @@ jobs:
           python-version: 3.7
 
   Python-Actions:
+    needs: [Explore-GitHub-Actions]
     runs-on: ubuntu-18.04
     steps:
       - name: Install dependecies
