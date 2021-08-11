@@ -35,11 +35,15 @@ jobs:
         wget -q https://github.com/RT-Thread/toolchains-ci/releases/download/arm-2017q2-v6/gcc-arm-none-eabi-6-2017-q2-update-linux.tar.bz2 
         sudo tar xjf gcc-arm-none-eabi-6-2017-q2-update-linux.tar.bz2 -C /opt
         /opt/gcc-arm-none-eabi-6-2017-q2-update/bin/arm-none-eabi-gcc --version
+        
+        
+    - name: Get Test_BSP
+      run: |
+        git clone https://github.com/armink/EasyFlashAutoTestBSP $TEST_BSP_ROOT
 
     - name: Build BSP
       run: |
         export RTT_EXEC_PATH=/opt/gcc-arm-none-eabi-6-2017-q2-update/bin
-        git clone https://github.com/armink/EasyFlashAutoTestBSP $TEST_BSP_ROOT
         echo CONFIG_RT_USING_UTESTCASES=y >> $TEST_BSP_ROOT/.config
         econ CONFIG_UTEST_SELF_PASS_TC=y >> $TEST_BSP_ROOT/.config
         scons -j$(nproc) -C $TEST_BSP_ROOT
