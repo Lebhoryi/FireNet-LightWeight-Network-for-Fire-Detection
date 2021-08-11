@@ -42,7 +42,6 @@ jobs:
         git clone https://github.com/armink/EasyFlashAutoTestBSP $TEST_BSP_ROOT
 
     - name: Build BSP
-      shell: bash
       run: |
         export RTT_EXEC_PATH=/opt/gcc-arm-none-eabi-6-2017-q2-update/bin
         echo CONFIG_RT_USING_UTESTCASES=y >> $TEST_BSP_ROOT/.config
@@ -54,6 +53,7 @@ jobs:
       run: |
         git clone https://github.com/armink/UtestRunner.git
         pushd UtestRunner
+        ls | grep rtthread
         python3 qemu_runner.py --elf $TEST_BSP_ROOT/rtthread.bin
         cat rtt_console.log
         popd
