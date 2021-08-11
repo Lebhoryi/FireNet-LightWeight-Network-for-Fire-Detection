@@ -50,11 +50,15 @@ jobs:
         scons -j$(nproc) -C $TEST_BSP_ROOT
         ls $TEST_BSP_ROOT
 
-    - name: Start test
+    - name: Get UtestRunner
       run: |
         git clone https://github.com/armink/UtestRunner.git
+      
+    - name: Start test
+      run: |
+        ls
         pushd UtestRunner
-        ls | grep rtthread
+        ls
         python3 qemu_runner.py --elf $TEST_BSP_ROOT/rtthread.bin
         cat rtt_console.log
         popd
