@@ -49,6 +49,6 @@ jobs:
         dd if=/dev/zero bs=1024 count=65536
         popd
         pushd UtestRunner
-        python3 qemu_runner.py --elf $TEST_BSP_ROOT/rtthread.elf --sd $TEST_BSP_ROOT/sd.bin
+        python3 qemu_runner.py --elf $TEST_BSP_ROOT/rtthread.elf 
         cat rtt_console.log
         popd
