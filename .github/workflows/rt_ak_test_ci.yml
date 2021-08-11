@@ -46,7 +46,7 @@ jobs:
       run: |
         export RTT_EXEC_PATH=/opt/gcc-arm-none-eabi-6-2017-q2-update/bin
         echo CONFIG_RT_USING_UTESTCASES=y >> $TEST_BSP_ROOT/.config
-        econ CONFIG_UTEST_SELF_PASS_TC=y >> $TEST_BSP_ROOT/.config
+        echo CONFIG_UTEST_SELF_PASS_TC=y >> $TEST_BSP_ROOT/.config
         scons --pyconfig-silent -C $TEST_BSP_ROOT
         scons -j$(nproc) -C $TEST_BSP_ROOT
 
