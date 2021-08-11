@@ -57,9 +57,5 @@ jobs:
     - name: Start test
       shell: bash
       run: |
-        ls
-        pushd UtestRunner
-        ls $TEST_BSP_ROOT
-        python3 qemu_runner.py --elf $TEST_BSP_ROOT/rtthread.bin
+        python3 UtestRunner/qemu_runner.py --elf $TEST_BSP_ROOT/rtthread.bin
         cat rtt_console.log
-        popd
