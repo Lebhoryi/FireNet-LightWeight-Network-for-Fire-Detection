@@ -44,5 +44,11 @@ jobs:
 
     - name: Start test
       run: |
+        git clone https://github.com/armink/UtestRunner.git
+        pushd $TEST_BSP_ROOT
+        dd if=/dev/zero of=sd.bin bs=1024 count=65536
+        popd
+        pushd UtestRunner
         python3 qemu_runner.py --elf $TEST_BSP_ROOT/rtthread.elf --sd $TEST_BSP_ROOT/sd.bin
         cat rtt_console.log
+        popd
