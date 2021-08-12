@@ -42,6 +42,13 @@ jobs:
       git clone https://github.com/Lebhoryi/QemuAutoBSP.git $TEST_BSP_ROOT
       scons --pyconfig-silent -C $TEST_BSP_ROOT
       scons -j$(nproc) -C $TEST_BSP_ROOT
+      
+  - name: Run RT-AK
+    run: |
+      git clone https://github.com/RT-Thread/RT-AK.git
+      pushd RT-AK/RT-AK/rt_ai_tools
+      python aitools.py --project=../../../$TEST_BSP_ROOT --platform=example
+      popd
 
   - name: Start test
     if: ${{ success() }}
