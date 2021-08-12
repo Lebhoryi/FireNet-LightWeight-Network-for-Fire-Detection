@@ -54,7 +54,7 @@ jobs:
       uses: actions/upload-artifact@v2.2.2
       with: 
         name: artpi_sdk_with_mnist
-        path: ${{github.workspace}}rtthread.bin
+        path: ${{github.workspace}}/rtthread.bin
         if-no-files-found: error
 
     # app test
