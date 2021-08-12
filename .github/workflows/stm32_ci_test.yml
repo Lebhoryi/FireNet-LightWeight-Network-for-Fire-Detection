@@ -48,6 +48,13 @@ jobs:
         export RTT_EXEC_PATH=/opt/gcc-arm-none-eabi-6-2017-q2-update/bin
         scons -j$(nproc) -C $TEST_BSP_ROOT
         echo "Compile done."
+        
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.2
+      with: 
+        name: rthread
+        path: $TEST_BSP_ROOT
+        if-no-files-fount: error
 
     # app test
 
