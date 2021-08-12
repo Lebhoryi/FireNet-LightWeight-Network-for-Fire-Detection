@@ -46,7 +46,7 @@ jobs:
     - name: Build BSP
       run: |
         export RTT_EXEC_PATH=/opt/gcc-arm-none-eabi-6-2017-q2-update/bin
-        scons -c
+        scons -c -C $TEST_BSP_ROOT
         scons --pyconfig-silent -C $TEST_BSP_ROOT
         scons -j$(nproc) -C $TEST_BSP_ROOT
         echo "Compile done."
