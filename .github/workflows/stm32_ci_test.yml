@@ -53,7 +53,7 @@ jobs:
       uses: actions/upload-artifact@v2.2.2
       with: 
         name: rthread
-        path:  ../AutoTestBsp/rtthread.bin
+        path: ${{github.workspace}}/../AutoTestBsp/rtthread.bin
         if-no-files-found: error
 
     # app test
