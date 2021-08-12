@@ -52,7 +52,7 @@ jobs:
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.2
       with: 
-        name: rthread
+        name: rthread.bin
         path: $TEST_BSP_ROOT
         if-no-files-fount: error
 
