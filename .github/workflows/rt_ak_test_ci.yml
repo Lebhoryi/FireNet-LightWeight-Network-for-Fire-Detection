@@ -36,12 +36,11 @@ jobs:
         sudo tar xjf gcc-arm-none-eabi-6-2017-q2-update-linux.tar.bz2 -C /opt
         /opt/gcc-arm-none-eabi-6-2017-q2-update/bin/arm-none-eabi-gcc --version
 
-    - name: Build BSP
+    - name: Prepare BSP
       run: |
         export RTT_EXEC_PATH=/opt/gcc-arm-none-eabi-6-2017-q2-update/bin
         git clone https://github.com/Lebhoryi/QemuAutoBSP.git $TEST_BSP_ROOT
-        scons --pyconfig-silent -C $TEST_BSP_ROOT
-        scons -j$(nproc) -C $TEST_BSP_ROOT
+
 
     - name: Run RT-AK
       run: |
@@ -49,6 +48,11 @@ jobs:
         pushd RT-AK/RT-AK/rt_ai_tools
         python aitools.py --project=../../../$TEST_BSP_ROOT --platform=example
         popd
+        
+    - name: Build BSP
+      run: |
+        scons --pyconfig-silent -C $TEST_BSP_ROOT
+        scons -j$(nproc) -C $TEST_BSP_ROOT
 
     - name: Start test
       if: ${{ success() }}
