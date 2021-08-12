@@ -3,7 +3,7 @@ name: RT-AK with plugin-stm32 CI
 on: [push, pull_request]
 
 jobs:
-  RT-AK Plugin-stm32 Actions:
+  RT-AK_Plugin-stm32_Actions:
     runs-on: ubuntu-18.04
     env:
       TEST_BSP_ROOT: ../AutoTestBsp
