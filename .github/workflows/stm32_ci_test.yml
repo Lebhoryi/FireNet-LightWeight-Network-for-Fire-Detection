@@ -42,6 +42,10 @@ jobs:
         pushd RT-AK/RT-AK/rt_ai_tools
         python aitools.py --project=../../../$TEST_BSP_ROOT --platform=stm32 --ext_tools=/opt/x-cube-ai/linux --clear
         popd
+        pushd $TEST_BSP_ROOT
+        ls rt_ai_lib/backend_plugin_stm32
+        cat rt_ai_lib/backend_plugin_stm32/backend_cubeai.h
+        popd
     
     - name: Build BSP
       run: |
