@@ -52,8 +52,8 @@ jobs:
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.2
       with: 
-        name: rthread.bin
-        path: ${{github.workspace}}/$TEST_BSP_ROOT
+        name: rthread
+        path: $TEST_BSP_ROOT/rtthread.bin
         if-no-files-found: error
 
     # app test
