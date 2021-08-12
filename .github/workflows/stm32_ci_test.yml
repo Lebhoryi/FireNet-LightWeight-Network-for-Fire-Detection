@@ -54,7 +54,7 @@ jobs:
       with: 
         name: rthread.bin
         path: $TEST_BSP_ROOT
-        if-no-files-fount: error
+        if-no-files-found: error
 
     # app test
 
