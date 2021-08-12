@@ -55,6 +55,6 @@ jobs:
       run: |
         git clone https://github.com/EdgeAIWithRTT/UtestRunner.git
         pushd UtestRunner
-        python3 qemu_runner.py --elf $TEST_BSP_ROOT/rtthread.elf
+        python3 qemu_runner.py --elf ../$TEST_BSP_ROOT/rtthread.elf
         cat rtt_console.log
         popd
