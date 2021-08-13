@@ -31,7 +31,7 @@ jobs:
 
     - name: Install Riscv ToolChains
       run: |
-        wget -q https://github.com/xpack-dev-tools/riscv-none-embed-gcc-xpack/releases/download/v8.3.0-1.2/xpack-riscv-none-embed-gcc-8.3.0-1.2-linux-x64.tar.gz
+        wget https://github.com/xpack-dev-tools/riscv-none-embed-gcc-xpack/releases/download/v8.3.0-1.2/xpack-riscv-none-embed-gcc-8.3.0-1.2-linux-x64.tar.gz
         sudo tar zxf xpack-riscv-none-embed-gcc-8.3.0-1.2-linux-x64.tar.bz2 -C /opt
         /opt/xpack-riscv-none-embed-gcc-8.3.0-1.2/bin/riscv-none-eabi-gcc --version
 
