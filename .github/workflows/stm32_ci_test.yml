@@ -1,6 +1,6 @@
 name: RT-AK with plugin-stm32 CI
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   RT-AK_Plugin-stm32_Actions:
