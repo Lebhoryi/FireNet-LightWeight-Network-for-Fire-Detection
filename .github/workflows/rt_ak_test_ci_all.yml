@@ -32,55 +32,57 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
     
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-
-    - name: Install Arm ToolChains
-      if: ${{ matrix.legs.QEMU_ARCH == 'arm' && success() }}
-      run: |
-        wget -q https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2
-        sudo tar xjf gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2 -C /opt
-        /opt/gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-gcc --version
-        echo "RTT_EXEC_PATH=/opt/gcc-arm-none-eabi-10-2020-q4-major/bin" >> $GITHUB_ENV
-
-    - name: Install RISC-V ToolChains
-      if: ${{ matrix.legs.QEMU_ARCH == 'riscv64' && success() }}
-      run: |
-        wget -q https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
-        sudo tar zxf riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz -C /opt
-        /opt/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin/riscv64-unknown-elf-gcc --version
-        echo "RTT_EXEC_PATH=/opt/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin" >> $GITHUB_ENV
-
-    - name: Prepare Arm BSP
-      if: ${{ matrix.legs.QEMU_ARCH == 'arm' && success() }}
-      run: |
-        git clone https://github.com/Lebhoryi/QemuAutoBSP.git $TEST_BSP_ROOT
-
-    - name: Prepare Arm BSP
-      if: ${{ matrix.legs.QEMU_ARCH == 'riscv64' && success() }}
-      run: |
-        git clone https://github.com/EdgeAIWithRTT/qemu-riscv-virt64.git $TEST_BSP_ROOT
-
-    - name: Run RT-AK
-      run: |
-        git clone https://github.com/rt-thread/RT-AK --depth 1
-        pushd RT-AK/RT-AK/rt_ai_tools
-        python aitools.py --project=../../../$TEST_BSP_ROOT --platform=example
-        popd
+    - run: qemu-system-riscv64 --version
     
-    - name: Build BSP
-      run: |
-        scons  -C $TEST_BSP_ROOT --verbose
+#     - name: Lint with flake8
+#       run: |
+#         # stop the build if there are Python syntax errors or undefined names
+#         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+#         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+#         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Start test
-      if: ${{ success() }}
-      run: |
-        git clone https://github.com/EdgeAIWithRTT/UtestRunner.git
-        pushd UtestRunner
-        python3 qemu_runner.py --system $TEST_QEMU_ARCH --machine $TEST_QEMU_MACHINE --elf ../$TEST_BSP_ROOT/rtthread.elf
-        cat rtt_console.log
-        popd
+#     - name: Install Arm ToolChains
+#       if: ${{ matrix.legs.QEMU_ARCH == 'arm' && success() }}
+#       run: |
+#         wget -q https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2
+#         sudo tar xjf gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2 -C /opt
+#         /opt/gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-gcc --version
+#         echo "RTT_EXEC_PATH=/opt/gcc-arm-none-eabi-10-2020-q4-major/bin" >> $GITHUB_ENV
+
+#     - name: Install RISC-V ToolChains
+#       if: ${{ matrix.legs.QEMU_ARCH == 'riscv64' && success() }}
+#       run: |
+#         wget -q https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
+#         sudo tar zxf riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz -C /opt
+#         /opt/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin/riscv64-unknown-elf-gcc --version
+#         echo "RTT_EXEC_PATH=/opt/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin" >> $GITHUB_ENV
+
+#     - name: Prepare Arm BSP
+#       if: ${{ matrix.legs.QEMU_ARCH == 'arm' && success() }}
+#       run: |
+#         git clone https://github.com/Lebhoryi/QemuAutoBSP.git $TEST_BSP_ROOT
+
+#     - name: Prepare Arm BSP
+#       if: ${{ matrix.legs.QEMU_ARCH == 'riscv64' && success() }}
+#       run: |
+#         git clone https://github.com/EdgeAIWithRTT/qemu-riscv-virt64.git $TEST_BSP_ROOT
+
+#     - name: Run RT-AK
+#       run: |
+#         git clone https://github.com/rt-thread/RT-AK --depth 1
+#         pushd RT-AK/RT-AK/rt_ai_tools
+#         python aitools.py --project=../../../$TEST_BSP_ROOT --platform=example
+#         popd
+    
+#     - name: Build BSP
+#       run: |
+#         scons  -C $TEST_BSP_ROOT --verbose
+
+#     - name: Start test
+#       if: ${{ success() }}
+#       run: |
+#         git clone https://github.com/EdgeAIWithRTT/UtestRunner.git
+#         pushd UtestRunner
+#         python3 qemu_runner.py --system $TEST_QEMU_ARCH --machine $TEST_QEMU_MACHINE --elf ../$TEST_BSP_ROOT/rtthread.elf
+#         cat rtt_console.log
+#         popd
