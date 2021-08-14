@@ -1,6 +1,6 @@
 name: RT-AK with plugin-k210 CI
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   RT-AK-Github-Actions:
