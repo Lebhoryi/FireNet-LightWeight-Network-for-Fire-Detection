@@ -74,7 +74,7 @@ jobs:
     
     - name: Build BSP
       run: |
-        scons -j$(nproc) -C $TEST_BSP_ROOT
+        scons  -C $TEST_BSP_ROOT --verbose
 
     - name: Start test
       if: ${{ success() }}
