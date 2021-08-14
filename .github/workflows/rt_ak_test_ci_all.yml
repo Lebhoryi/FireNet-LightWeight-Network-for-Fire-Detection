@@ -3,8 +3,20 @@ name: RT-AK with plugin-example CI
 on: [push, pull_request]
 
 jobs:
-  Independence:
+  RT-AK-Github-Actions:
     runs-on: ubuntu-latest
+    name: ${{ matrix.legs.UTEST }}
+    strategy:
+      fail-fast: false
+      matrix:
+        legs:
+          - {UTEST: "stm32/components/utest", RTT_BSP: "../AutoSTM32BSP", QEMU_ARCH: "arm", QEMU_MACHINE: "vexpress-a9"}
+          - {UTEST: "riscv64/kernel/mem", RTT_BSP: "../AutoK210BSP", QEMU_ARCH: "riscv64", QEMU_MACHINE: "virt"}
+    env:
+      TEST_BSP_ROOT: ${{ matrix.legs.RTT_BSP }}
+      TEST_QEMU_ARCH: ${{ matrix.legs.QEMU_ARCH }}
+      TEST_QEMU_MACHINE: ${{ matrix.legs.QEMU_MACHINE }}
+      
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -27,22 +39,6 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-
-  RT-AK-Github-Actions:
-    runs-on: ubuntu-latest
-    needs: [Independence]
-    name: ${{ matrix.legs.UTEST }}
-    strategy:
-      fail-fast: false
-      matrix:
-        legs:
-          - {UTEST: "stm32/components/utest", RTT_BSP: "../AutoSTM32BSP", QEMU_ARCH: "arm", QEMU_MACHINE: "vexpress-a9"}
-          - {UTEST: "riscv64/kernel/mem", RTT_BSP: "../AutoK210BSP", QEMU_ARCH: "riscv64", QEMU_MACHINE: "virt"}
-    env:
-      TEST_BSP_ROOT: ${{ matrix.legs.RTT_BSP }}
-      TEST_QEMU_ARCH: ${{ matrix.legs.QEMU_ARCH }}
-      TEST_QEMU_MACHINE: ${{ matrix.legs.QEMU_MACHINE }}
-    steps:
     - name: Install Arm ToolChains
       if: ${{ matrix.legs.QEMU_ARCH == 'arm' && success() }}
       run: |
