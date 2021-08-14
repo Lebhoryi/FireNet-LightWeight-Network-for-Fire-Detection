@@ -51,7 +51,7 @@ jobs:
       if: ${{ matrix.legs.QEMU_ARCH == 'riscv64' && success() }}
       run: |
         wget -q https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
-        sudo tar zxvf riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz -C /opt
+        sudo tar zxf riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz -C /opt
         /opt/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin/riscv64-unknown-elf-gcc --version
         echo "RTT_EXEC_PATH=/opt/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin" >> $GITHUB_ENV
 
@@ -74,7 +74,6 @@ jobs:
     
     - name: Build BSP
       run: |
-        scons --pyconfig-silent -C $TEST_BSP_ROOT
         scons -j$(nproc) -C $TEST_BSP_ROOT
 
     - name: Start test
